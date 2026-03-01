@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEEP — Digital Engineering & Enterprise Platforms</title>
+    <meta name="description"
+        content="DEEP builds scalable digital platforms, enterprise systems, and engineering solutions that power modern businesses." />
+    <meta name="theme-color" content="#ffffff" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="main.js" defer></script>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+        <div class="cursor__dot"></div>
+        <div class="cursor__ring"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav__inner">
+            <a href="#" class="nav__logo" id="nav-logo" data-cursor="link">DEEP</a>
+            <div class="nav__links" id="nav-links">
+                <a href="#about" class="nav__link" data-cursor="link">About</a>
+                <a href="#services" class="nav__link" data-cursor="link">Services</a>
+                <a href="#experience" class="nav__link" data-cursor="link">Approach</a>
+                <a href="#contact" class="nav__link" data-cursor="link">Contact</a>
+            </div>
+            <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+        <div class="hero__canvas" id="hero-canvas" aria-hidden="true"></div>
+        <div class="hero__container">
+            <div class="hero__label parallax-layer" data-depth="0.15" id="hero-label">
+                <span class="hero__label-dot"></span>
+                Engineering the future
+            </div>
+            <h1 class="hero__title parallax-layer" data-depth="0.05" id="hero-title">DEEP</h1>
+            <p class="hero__subtitle parallax-layer" data-depth="0.1" id="hero-subtitle">
+                Digital Engineering<br />&amp; Enterprise Platforms
+            </p>
+            <p class="hero__description parallax-layer" data-depth="0.12" id="hero-description">
+                We architect and build the digital infrastructure<br class="hide-mobile" />
+                that powers ambitious enterprises.
+            </p>
+            <div class="hero__cta parallax-layer" data-depth="0.08" id="hero-cta">
+                <a href="#services" class="btn btn--primary" data-cursor="button">What We Build</a>
+                <a href="#contact" class="btn btn--ghost" data-cursor="button">Get in Touch</a>
+            </div>
+        </div>
+        <div class="hero__scroll" id="hero-scroll">
+            <span>Scroll</span>
+            <div class="hero__scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section class="section about section--cinematic" id="about">
+
+        <div class="container">
+            <div class="section__header">
+                <span class="section__label" id="about-label">01 — About</span>
+                <h2 class="section__title parallax-layer" data-depth="0.06" id="about-title">
+                    We don't just build software.<br />We engineer platforms.
+                </h2>
+            </div>
+            <div class="about__grid">
+                <div class="about__text" id="about-text">
+                    <p>DEEP is a focused engineering company that designs and builds
+                        digital platforms for enterprises that demand reliability, scale,
+                        and precision. We work with organizations that understand technology
+                        is infrastructure — not decoration.</p>
+                    <p>Our team brings deep expertise in distributed systems, cloud
+                        architecture, and platform engineering. We build what matters
+                        and build it to last.</p>
+                </div>
+                <div class="about__stats" id="about-stats">
+                    <div class="stat"><span class="stat__number">50+</span><span class="stat__label">Projects
+                            Delivered</span></div>
+                    <div class="stat"><span class="stat__number">99.9%</span><span class="stat__label">Platform
+                            Uptime</span></div>
+                    <div class="stat"><span class="stat__number">8+</span><span class="stat__label">Years of
+                            Engineering</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SERVICES ========== -->
+    <section class="section services section--cinematic" id="services">
+
+        <div class="container">
+            <div class="section__header">
+                <span class="section__label" id="services-label">02 — Services</span>
+                <h2 class="section__title parallax-layer" data-depth="0.06" id="services-title">What We Build</h2>
+                <p class="section__desc" id="services-desc">
+                    We focus on four core disciplines that define modern enterprise engineering.
+                </p>
+            </div>
+            <div class="services__grid" id="services-grid">
+                <article class="card" data-cursor="card" data-tilt>
+                    <div class="card__index">01</div>
+                    <div class="card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                    </div>
+                    <h3 class="card__title">Digital Platforms</h3>
+                    <p class="card__text">End-to-end digital platform development — from customer-facing applications to
+                        internal operational tools. Built for scale, designed for clarity.</p>
+                </article>
+                <article class="card" data-cursor="card" data-tilt>
+                    <div class="card__index">02</div>
+                    <div class="card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h3 class="card__title">Enterprise Systems</h3>
+                    <p class="card__text">Robust enterprise-grade systems that handle complexity without compromising
+                        performance. ERP integrations, workflow engines, and data pipelines.</p>
+                </article>
+                <article class="card" data-cursor="card" data-tilt>
+                    <div class="card__index">03</div>
+                    <div class="card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg>
+                    </div>
+                    <h3 class="card__title">Scalable Architectures</h3>
+                    <p class="card__text">Cloud-native, distributed architectures designed to grow with your business.
+                        Microservices, event-driven systems, and infrastructure as code.</p>
+                </article>
+                <article class="card" data-cursor="card" data-tilt>
+                    <div class="card__index">04</div>
+                    <div class="card__icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                        </svg>
+                    </div>
+                    <h3 class="card__title">Automation & Engineering</h3>
+                    <p class="card__text">CI/CD pipelines, automated testing frameworks, and DevOps engineering that
+                        turns manual processes into reliable, repeatable systems.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== EXPERIENCE ========== -->
+    <section class="section experience section--cinematic" id="experience">
+
+        <div class="container">
+            <div class="section__header">
+                <span class="section__label" id="exp-label">03 — Approach</span>
+                <h2 class="section__title parallax-layer" data-depth="0.06" id="exp-title">Precision. At every layer.
+                </h2>
+            </div>
+            <div class="experience__track" id="experience-track">
+                <div class="pillar" id="pillar-1">
+                    <div class="pillar__line"></div>
+                    <div class="pillar__content">
+                        <span class="pillar__number">01</span>
+                        <h3 class="pillar__title">Discovery & Architecture</h3>
+                        <p class="pillar__text">We start by understanding the problem deeply — mapping domains, defining
+                            boundaries, and designing systems before writing a single line of code.</p>
+                    </div>
+                </div>
+                <div class="pillar" id="pillar-2">
+                    <div class="pillar__line"></div>
+                    <div class="pillar__content">
+                        <span class="pillar__number">02</span>
+                        <h3 class="pillar__title">Engineering & Iteration</h3>
+                        <p class="pillar__text">Our engineering process is disciplined and iterative. We build in small,
+                            testable increments with continuous integration and real-time feedback loops.</p>
+                    </div>
+                </div>
+                <div class="pillar" id="pillar-3">
+                    <div class="pillar__line"></div>
+                    <div class="pillar__content">
+                        <span class="pillar__number">03</span>
+                        <h3 class="pillar__title">Delivery & Scale</h3>
+                        <p class="pillar__text">We deliver production-ready platforms with monitoring, observability,
+                            and scaling strategies built in — not bolted on.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="experience__parallax" aria-hidden="true">
+                <div class="parallax-shape shape--1" id="px-shape-1"></div>
+                <div class="parallax-shape shape--2" id="px-shape-2"></div>
+                <div class="parallax-shape shape--3" id="px-shape-3"></div>
+                <div class="parallax-shape shape--4" id="px-shape-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MARQUEE ========== -->
+    <section class="marquee-section" id="marquee" aria-hidden="true">
+        <div class="marquee__track" id="marquee-track">
+            <span class="marquee__item">Digital Platforms</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Enterprise Systems</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Scalable Architecture</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Automation</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Cloud Engineering</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Platform Design</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Digital Platforms</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Enterprise Systems</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Scalable Architecture</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Automation</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Cloud Engineering</span><span class="marquee__sep">◆</span>
+            <span class="marquee__item">Platform Design</span><span class="marquee__sep">◆</span>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section class="section contact section--cinematic" id="contact">
+
+        <div class="container">
+            <div class="section__header section__header--center">
+                <span class="section__label" id="contact-label">04 — Contact</span>
+                <h2 class="section__title parallax-layer" data-depth="0.06" id="contact-title">Let's build
+                    something<br />that matters.</h2>
+                <p class="section__desc" id="contact-desc">
+                    We're selective about the projects we take on. If you're building
+                    something ambitious, we'd like to hear about it.
+                </p>
+            </div>
+            <div class="contact__actions" id="contact-actions">
+                <a href="mailto:hello@deep.engineering" class="btn btn--primary btn--lg"
+                    data-cursor="button">hello@deep.engineering</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__brand">
+                    <span class="footer__logo">DEEP</span>
+                    <p class="footer__tagline">Digital Engineering &amp; Enterprise Platforms</p>
+                </div>
+                <div class="footer__links">
+                    <a href="#about" class="footer__link" data-cursor="link">About</a>
+                    <a href="#services" class="footer__link" data-cursor="link">Services</a>
+                    <a href="#experience" class="footer__link" data-cursor="link">Approach</a>
+                    <a href="#contact" class="footer__link" data-cursor="link">Contact</a>
+                </div>
+                <div class="footer__copy">
+                    <p>&copy; 2026 DEEP. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
