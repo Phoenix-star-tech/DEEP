@@ -69,6 +69,7 @@
         initCinematicSections();
         initParallaxLayers();
         initCardTilt();
+        initFoundersSlider();
         initSmoothScroll();
 
         if (CONFIG.threeEnabled && typeof THREE !== 'undefined') {
@@ -244,7 +245,7 @@
         reveal('#about', '#about .section__label', { y: 12, duration: 0.9 });
         reveal('#about', '#about .section__title', { y: 18, duration: 1.2, delay: 0.1 });
         reveal('#about', '.about__text', { y: 20, duration: 1.1, delay: 0.2 });
-        reveal('#about', '.about__stats', { y: 20, duration: 1.1, delay: 0.35 });
+        reveal('#about', '.founders', { y: 24, duration: 1.1, delay: 0.35 });
 
         gsap.utils.toArray('.stat').forEach((stat, i) => {
             gsap.fromTo(stat, { opacity: 0, y: 15 }, {
@@ -314,7 +315,54 @@
 
 
     /* =========================================
-       7. CARD TILT
+       8. FOUNDERS SLIDER
+       ========================================= */
+    function initFoundersSlider() {
+        const cards = document.querySelectorAll('.founder-card');
+        const dots  = document.querySelectorAll('.founders__dot');
+        const wrap  = document.getElementById('founders');
+        if (!cards.length) return;
+
+        let current = 0;
+        let timer   = null;
+        const INTERVAL = 4000;
+
+        function goTo(index) {
+            cards[current].classList.remove('is-active');
+            dots[current].classList.remove('is-active');
+            current = (index + cards.length) % cards.length;
+            cards[current].classList.add('is-active');
+            dots[current].classList.add('is-active');
+        }
+
+        function start() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(() => goTo(current + 1), INTERVAL);
+        }
+
+        // Init first card
+        cards[0].classList.add('is-active');
+
+        // Dot clicks
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                goTo(parseInt(dot.getAttribute('data-index'), 10));
+                start(); // reset timer on manual nav
+            });
+        });
+
+        // Pause on hover
+        if (wrap) {
+            wrap.addEventListener('mouseenter', () => { if (timer) clearInterval(timer); });
+            wrap.addEventListener('mouseleave', () => start());
+        }
+
+        start();
+    }
+
+
+    /* =========================================
+       CARD TILT
        ========================================= */
     function initCardTilt() {
         if (CONFIG.isMobile || !CONFIG.supportsHover) return;
