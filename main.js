@@ -38,7 +38,7 @@
         const cores = navigator.hardwareConcurrency || 4;
         const memory = navigator.deviceMemory || 8;
         CONFIG.isLowEnd = cores < 4 || memory < 4;
-        CONFIG.threeEnabled = !CONFIG.isMobile && !CONFIG.isLowEnd && !CONFIG.prefersReducedMotion;
+        CONFIG.threeEnabled = !CONFIG.isLowEnd && !CONFIG.prefersReducedMotion;
     }
 
     /* =========================================
@@ -128,35 +128,47 @@
         const container = document.getElementById('hero-canvas');
         if (!container) return;
 
+        // Scale everything down on mobile so the globe fits the smaller viewport
+        const s = CONFIG.isMobile ? 0.55 : 1;
+
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
-        camera.position.z = 5;
+        camera.position.z = CONFIG.isMobile ? 6 : 5;
 
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !CONFIG.isMobile, powerPreference: 'low-power' });
         renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, CONFIG.isMobile ? 1 : 1.5));
         renderer.setClearColor(0x000000, 0);
         container.appendChild(renderer.domElement);
 
-        // Wireframe geometries
-        const icoGeo = new THREE.IcosahedronGeometry(1.8, 1);
-        const icoMat = new THREE.MeshBasicMaterial({ color: 0xcbd5e1, wireframe: true, transparent: true, opacity: 0.25 });
+        // Wireframe geometries — scaled by s on mobile, different colors per device
+        const icoColor = CONFIG.isMobile ? 0x94a3b8 : 0xcbd5e1;
+        const icoOpacity = CONFIG.isMobile ? 0.18 : 0.25;
+        const octColor = CONFIG.isMobile ? 0xaab4c8 : 0xe2e8f0;
+        const octOpacity = CONFIG.isMobile ? 0.13 : 0.15;
+        const ringColor = CONFIG.isMobile ? 0x94a3b8 : 0xe2e8f0;
+        const ringOpacity = CONFIG.isMobile ? 0.10 : 0.10;
+        const dotColor = CONFIG.isMobile ? 0x64748b : 0x94a3b8;
+        const dotOpacity = CONFIG.isMobile ? 0.30 : 0.40;
+
+        const icoGeo = new THREE.IcosahedronGeometry(1.8 * s, 1);
+        const icoMat = new THREE.MeshBasicMaterial({ color: icoColor, wireframe: true, transparent: true, opacity: icoOpacity });
         const ico = new THREE.Mesh(icoGeo, icoMat);
         scene.add(ico);
 
-        const octGeo = new THREE.OctahedronGeometry(0.9, 0);
-        const octMat = new THREE.MeshBasicMaterial({ color: 0xe2e8f0, wireframe: true, transparent: true, opacity: 0.15 });
+        const octGeo = new THREE.OctahedronGeometry(0.9 * s, 0);
+        const octMat = new THREE.MeshBasicMaterial({ color: octColor, wireframe: true, transparent: true, opacity: octOpacity });
         const oct = new THREE.Mesh(octGeo, octMat);
         scene.add(oct);
 
-        const ringGeo = new THREE.TorusGeometry(2.5, 0.01, 8, 64);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0xe2e8f0, transparent: true, opacity: 0.1 });
+        const ringGeo = new THREE.TorusGeometry(2.5 * s, 0.01, 8, 64);
+        const ringMat = new THREE.MeshBasicMaterial({ color: ringColor, transparent: true, opacity: ringOpacity });
         const ring = new THREE.Mesh(ringGeo, ringMat);
         scene.add(ring);
 
         const dotsGeo = new THREE.BufferGeometry();
         dotsGeo.setAttribute('position', new THREE.Float32BufferAttribute(icoGeo.attributes.position.array.slice(), 3));
-        const dots = new THREE.Points(dotsGeo, new THREE.PointsMaterial({ color: 0x94a3b8, size: 0.03, transparent: true, opacity: 0.4 }));
+        const dots = new THREE.Points(dotsGeo, new THREE.PointsMaterial({ color: dotColor, size: 0.03 * s, transparent: true, opacity: dotOpacity }));
         scene.add(dots);
 
         gsap.to(container, { opacity: 1, duration: 2, delay: 0.5, ease: 'power1.out' });
@@ -319,12 +331,12 @@
        ========================================= */
     function initFoundersSlider() {
         const cards = document.querySelectorAll('.founder-card');
-        const dots  = document.querySelectorAll('.founders__dot');
-        const wrap  = document.getElementById('founders');
+        const dots = document.querySelectorAll('.founders__dot');
+        const wrap = document.getElementById('founders');
         if (!cards.length) return;
 
         let current = 0;
-        let timer   = null;
+        let timer = null;
         const INTERVAL = 4000;
 
         function goTo(index) {
