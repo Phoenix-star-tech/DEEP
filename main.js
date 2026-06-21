@@ -445,33 +445,29 @@
 
 
     /* =========================================
-       GMAIL REDIRECT — ALL DEVICES
+       MAIL REDIRECT — DESKTOP: Gmail Web | MOBILE: Native Mail App
        ========================================= */
     function initMailtoRedirect() {
+        // Detect mobile BEFORE attaching any listener.
+        // On mobile we do nothing at all — the href="mailto:" fires
+        // natively and the OS shows the mail-app chooser.
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        const isIOS = /iPad|iPhone|iPod/.test(userAgent)
+            || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isAndroid = /Android/.test(userAgent);
+        const isMobile = isIOS || isAndroid
+            || window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+        if (isMobile) return; // Leave mailto: links completely untouched on mobile
+
+        // Desktop only: intercept clicks and open Gmail compose in a new tab
         const mailLinks = document.querySelectorAll('a[href^="mailto:"]');
         mailLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const email = link.getAttribute('href').replace('mailto:', '');
                 const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                const isIOS = /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-                const isAndroid = /Android/.test(userAgent);
-
-                if (isIOS) {
-                    // Try native Gmail app, fallback to Gmail Web
-                    const gmailAppUrl = `googlegmail:///co?to=${encodeURIComponent(email)}`;
-                    const start = Date.now();
-                    window.location.href = gmailAppUrl;
-                    setTimeout(() => {
-                        if (Date.now() - start < 1500) {
-                            window.open(gmailWebUrl, '_blank');
-                        }
-                    }, 1000);
-                } else {
-                    // Android + Desktop — open Gmail compose in a new tab
-                    window.open(gmailWebUrl, '_blank');
-                }
+                window.open(gmailWebUrl, '_blank');
             });
         });
     }
