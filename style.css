@@ -852,6 +852,26 @@ img {
   line-height: 1.7;
 }
 
+.card__site-link {
+  position: relative;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--space-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.3s ease, transform 0.3s var(--ease-out);
+  width: fit-content;
+  cursor: pointer;
+}
+
+.card__site-link:hover {
+  border-bottom-color: var(--gray-800);
+  transform: translateX(3px);
+}
+
 /* ---------- Experience / Approach ---------- */
 .experience {
   overflow: hidden;
@@ -1212,6 +1232,16 @@ img {
     padding: var(--space-lg);
   }
 
+  /* Ensure Visit Site link is fully tappable on mobile */
+  .card__site-link {
+    pointer-events: auto;
+    cursor: pointer;
+    padding: 8px 0;
+    font-size: 0.9375rem;
+    color: var(--gray-900);
+    border-bottom-color: var(--gray-300);
+  }
+
   .footer__inner {
     flex-direction: column;
     text-align: center;
@@ -1227,9 +1257,9 @@ img {
     cursor: pointer;
   }
 
-  /* ---- Founder cards: keep desktop overlay style on mobile ---- */
+  /* ---- Founder cards: match tablet (1024px) style exactly on mobile ---- */
   .founder-card {
-    height: 400px;
+    height: 380px;
     display: none;
     border-radius: 16px;
     overflow: hidden;
@@ -1240,7 +1270,7 @@ img {
     display: block;
   }
 
-  /* Image fills the whole card (same as desktop) */
+  /* Image fills the whole card (same as tablet) */
   .founder-card__image-wrap {
     position: absolute;
     inset: 0;
@@ -1248,32 +1278,32 @@ img {
     height: 100%;
   }
 
-  /* Gradient scrim — lighter so photo is clearly visible */
+  /* Same gradient scrim as tablet/desktop */
   .founder-card::after {
     background: linear-gradient(to top,
-        rgba(5, 10, 20, 0.20) 0%,
-        rgba(5, 10, 20, 0.10) 45%,
-        transparent 75%);
+        rgba(10, 15, 30, 0.72) 0%,
+        rgba(10, 15, 30, 0.2) 50%,
+        transparent 100%);
   }
 
-  /* Text sits directly on picture — no background at all */
+  /* Body same as tablet */
   .founder-card__body {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     background: none !important;
-    padding: var(--space-md);
+    padding: var(--space-lg);
     gap: 8px;
   }
 
+  /* Full quote — no clamping, same as tablet */
   .founder-card__quote {
-    font-size: 0.82rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 0.9rem;
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
   }
 
   /* Make parallax shapes visible on mobile (Approach section) */
@@ -1329,9 +1359,16 @@ img {
     font-size: 2rem;
   }
 
-  /* Even smaller screens — tighten founder card image */
+  /* Keep founder card image full-height on small screens — matches tablet */
+  .founder-card {
+    height: 380px;
+  }
+
   .founder-card__image-wrap {
-    height: 200px;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .founder-card__name {

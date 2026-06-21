@@ -51,8 +51,9 @@
     /* =========================================
        INIT
        ========================================= */
-    document.addEventListener('DOMContentLoaded', () => {
+    function initializeApp() {
         detectCapabilities();
+        initMailtoRedirect();
 
         if (CONFIG.prefersReducedMotion) {
             initNavigation();
@@ -60,7 +61,9 @@
             return;
         }
 
-        gsap.registerPlugin(ScrollTrigger);
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
 
         initNavigation();
         initCursor();
@@ -77,7 +80,13 @@
         }
 
         startRenderLoop();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    } else {
+        initializeApp();
+    }
 
 
     /* =========================================
@@ -430,6 +439,39 @@
             link.addEventListener('click', () => {
                 toggle.classList.remove('is-open');
                 links.classList.remove('is-open');
+            });
+        });
+    }
+
+
+    /* =========================================
+       GMAIL REDIRECT — ALL DEVICES
+       ========================================= */
+    function initMailtoRedirect() {
+        const mailLinks = document.querySelectorAll('a[href^="mailto:"]');
+        mailLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const email = link.getAttribute('href').replace('mailto:', '');
+                const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                const isIOS = /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                const isAndroid = /Android/.test(userAgent);
+
+                if (isIOS) {
+                    // Try native Gmail app, fallback to Gmail Web
+                    const gmailAppUrl = `googlegmail:///co?to=${encodeURIComponent(email)}`;
+                    const start = Date.now();
+                    window.location.href = gmailAppUrl;
+                    setTimeout(() => {
+                        if (Date.now() - start < 1500) {
+                            window.open(gmailWebUrl, '_blank');
+                        }
+                    }, 1000);
+                } else {
+                    // Android + Desktop — open Gmail compose in a new tab
+                    window.open(gmailWebUrl, '_blank');
+                }
             });
         });
     }
